@@ -1392,7 +1392,7 @@ def generate(base_dir):
 </head><body>
 <header class="top"><div class="top-inner">
   <div><div class="brand">选股雷达 <span>实验室</span></div><div class="meta">公开页，不包含个人账户/持仓/基金数据 · 生成 {now}</div></div>
-	  <nav class="nav" aria-label="选股实验室导航"><a class="nav-primary" href="#picks">信号复盘</a><a href="#market-fund">大盘资金</a><a href="/invest/virtual-account.html">模拟盘</a><a href="#backtest">策略回测</a><a href="/invest/risk-alert.html">风险排雷</a><details class="nav-more"><summary>更多工具</summary><div class="nav-menu"><a href="#history">历史批次</a><a href="stock-lab/ai/">AI报告</a><a href="stock-lab/graph.html">知识图谱</a><a href="stock-lab/vibe/alphas.html">Alpha因子库</a><a href="stock-lab/vibe/bench.html">Alpha回测</a><a href="stock-lab/vibe/filters.html">过滤器搜索</a><a href="stock-lab/vibe/review.html">Vibe复盘</a></div></details></nav>
+	  <nav class="nav" aria-label="选股实验室导航"><a class="nav-primary" href="#picks">信号复盘</a><a href="#market-fund">大盘资金</a><a href="/invest/virtual-account.html">模拟盘</a><a href="#backtest">策略回测</a><a href="/invest/analytics.html">📊 图表分析</a><a href="/invest/risk-alert.html">风险排雷</a><details class="nav-more"><summary>更多工具</summary><div class="nav-menu"><a href="#history">历史批次</a><a href="stock-lab/ai/">AI报告</a><a href="stock-lab/graph.html">知识图谱</a><a href="stock-lab/vibe/alphas.html">Alpha因子库</a><a href="stock-lab/vibe/bench.html">Alpha回测</a><a href="stock-lab/vibe/filters.html">过滤器搜索</a><a href="stock-lab/vibe/review.html">Vibe复盘</a></div></details></nav>
 </div></header>
 {ticker_tape_html(latest_picks, market_fund)}
 	<main class="wrap">

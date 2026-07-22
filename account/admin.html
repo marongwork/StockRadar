@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>管理后台 | 选股雷达</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#0a0e17;--panel:#131826;--panel2:#0f1421;--line:#25304a;--text:#e7ecf5;--muted:#8390ad;--gold:#f0b60b;--gold2:#d97706;--green:#00d68f;--red:#ff5252;}
+*{box-sizing:border-box} body{margin:0;font:14px/1.6 -apple-system,BlinkMacSystemFont,'Microsoft YaHei',sans-serif;color:var(--text);background:var(--bg);padding:20px}
+.wrap{max-width:1100px;margin:0 auto}
+h1{font-size:22px;margin:0 0 8px} h2{font-size:16px;margin:24px 0 10px;border-left:3px solid var(--gold);padding-left:10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px}
+.stat b{display:block;font-size:28px;color:var(--gold)} .stat span{color:var(--muted);font-size:12px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:16px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:12px}
+.toolbar label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+.toolbar input,.toolbar select{background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:8px;font-size:13px}
+.btn{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#3a2a05;border:none;border-radius:6px;padding:9px 16px;font-weight:800;cursor:pointer;font-size:13px}
+.btn:hover{box-shadow:0 4px 12px rgba(240,185,11,.4)}
+.btn-sm{padding:5px 10px;font-size:11px}
+.btn-danger{background:rgba(255,82,82,.15);color:#ff8a8a;border:1px solid rgba(255,82,82,.3)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase}
+tbody tr:hover{background:rgba(240,185,11,.05)}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.tag.vip{background:rgba(240,185,11,.2);color:var(--gold)} .tag.svip{background:rgba(0,214,143,.15);color:var(--green)} .tag.normal{background:rgba(131,144,173,.15);color:var(--muted)}
+.tag.used{background:rgba(255,82,82,.12);color:#ff8a8a} .tag.unused{background:rgba(0,214,143,.12);color:var(--green)}
+.scroll{overflow-x:auto}
+.msg{padding:10px;border-radius:6px;margin-bottom:12px;display:none}
+.msg.show{display:block}.msg.ok{background:rgba(0,214,143,.12);color:var(--green);border:1px solid rgba(0,214,143,.3)}.msg.err{background:rgba(255,82,82,.12);color:#ff8a8a;border:1px solid rgba(255,82,82,.3)}
+.copy-btn{background:none;border:1px solid var(--line);color:var(--muted);padding:2px 8px;border-radius:4px;cursor:pointer;font-size:11px}
+.copy-btn:hover{border-color:var(--gold);color:var(--gold)}
+</style>
+</head><body>
+<div class="wrap">
+  <h1>选股雷达 · 管理后台</h1>
+  <div class="msg" id="msg"></div>
+
+  <h2>统计概览</h2>
+  <div class="stats" id="stats"></div>
+
+  <h2>生成兑换码</h2>
+  <div class="panel">
+    <div class="toolbar">
+      <div><label>等级</label><select id="genTier"><option value="vip">VIP</option><option value="svip">超级VIP</option></select></div>
+      <div><label>有效期(天,0=永久)</label><input id="genDays" type="number" value="30" style="width:80px"></div>
+      <div><label>数量</label><input id="genCount" type="number" value="10" style="width:70px"></div>
+      <div><label>备注</label><input id="genNote" placeholder="如：首批内测" style="width:160px"></div>
+      <button class="btn" onclick="generateCodes()">生成</button>
+    </div>
+    <div id="genResult"></div>
+  </div>
+
+  <h2>兑换码列表</h2>
+  <div class="panel">
+    <div class="toolbar">
+      <label><input type="checkbox" id="onlyUnused" onchange="loadCodes()"> 只看未使用</label>
+      <button class="btn btn-sm" onclick="loadCodes()">刷新</button>
+    </div>
+    <div class="scroll"><table id="codesTable"><thead><tr><th>兑换码</th><th>等级</th><th>有效期</th><th>状态</th><th>使用者</th><th>使用时间</th><th>备注</th></tr></thead><tbody></tbody></table></div>
+  </div>
+
+  <h2>用户列表</h2>
+  <div class="panel">
+    <button class="btn btn-sm" onclick="loadUsers()" style="margin-bottom:12px">刷新</button>
+    <div class="scroll"><table id="usersTable"><thead><tr><th>手机号/邮箱</th><th>等级</th><th>到期</th><th>注册时间</th><th>操作</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</div>
+<script>
+function showMsg(text, ok) { const el = document.getElementById('msg'); el.textContent = text; el.className = 'msg show ' + (ok ? 'ok' : 'err'); setTimeout(() => el.classList.remove('show'), 3000); }
+
+async function loadStats() {
+  const r = await fetch('/account-api/admin/stats', {credentials: 'same-origin'});
+  if (!r.ok) { document.getElementById('stats').innerHTML = '<div class="stat"><span>需用 walle 账号登录且有管理员权限</span></div>'; return; }
+  const d = await r.json();
+  const names = {normal: '普通', vip: 'VIP', svip: '超级VIP'};
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><b>${d.users_total}</b><span>用户总数</span></div>
+    <div class="stat"><b>${d.users_by_tier.vip || 0}</b><span>VIP 用户</span></div>
+    <div class="stat"><b>${d.users_by_tier.svip || 0}</b><span>超级VIP</span></div>
+    <div class="stat"><b>${d.codes_available}</b><span>可用兑换码</span></div>
+    <div class="stat"><b>${d.codes_used}</b><span>已用兑换码</span></div>
+  `;
+}
+
+async function generateCodes() {
+  const body = {tier: document.getElementById('genTier').value, days: +document.getElementById('genDays').value, count: +document.getElementById('genCount').value, note: document.getElementById('genNote').value};
+  const r = await fetch('/account-api/admin/generate', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body), credentials: 'same-origin'});
+  const d = await r.json();
+  if (!r.ok) { showMsg(d.error || '生成失败', false); return; }
+  showMsg(`已生成 ${d.codes.length} 个兑换码`, true);
+  document.getElementById('genResult').innerHTML = '<p style="color:var(--muted);font-size:12px;margin:8px 0">点击复制：</p>' + d.codes.map(c => `<button class="copy-btn" onclick="copyText('${c}')">${c}</button>`).join(' ');
+  loadCodes(); loadStats();
+}
+
+async function loadCodes() {
+  const onlyUnused = document.getElementById('onlyUnused').checked ? '?only-unused=1' : '';
+  const r = await fetch('/account-api/admin/codes' + onlyUnused, {credentials: 'same-origin'});
+  if (!r.ok) return;
+  const codes = await r.json();
+  const names = {normal: '普通', vip: 'VIP', svip: '超级VIP'};
+  document.querySelector('#codesTable tbody').innerHTML = codes.map(c => `<tr>
+    <td><button class="copy-btn" onclick="copyText('${c.code}')">${c.code}</button></td>
+    <td><span class="tag ${c.tier}">${names[c.tier]}</span></td>
+    <td>${c.valid_days ? c.valid_days + '天' : '永久'}</td>
+    <td><span class="tag ${c.used_by ? 'used' : 'unused'}">${c.used_by ? '已用' : '可用'}</span></td>
+    <td>${c.used_by || '-'}</td>
+    <td>${c.used_at ? c.used_at.slice(0,16) : '-'}</td>
+    <td>${c.batch_note || ''}</td>
+  </tr>`).join('');
+}
+
+async function loadUsers() {
+  const r = await fetch('/account-api/admin/users', {credentials: 'same-origin'});
+  if (!r.ok) return;
+  const users = await r.json();
+  const names = {normal: '普通', vip: 'VIP', svip: '超级VIP'};
+  document.querySelector('#usersTable tbody').innerHTML = users.map(u => `<tr>
+    <td><b>${u.username}</b></td>
+    <td><span class="tag ${u.tier}">${names[u.tier]}</span></td>
+    <td>${u.tier_expires ? u.tier_expires.slice(0,10) : (u.tier === 'normal' ? '-' : '永久')}</td>
+    <td>${u.created_at ? u.created_at.slice(0,16) : '-'}</td>
+    <td>
+      <button class="btn btn-sm" onclick="setTier('${u.username}','vip',30)">VIP30天</button>
+      <button class="btn btn-sm" onclick="setTier('${u.username}','svip',90)">SVIP90天</button>
+      <button class="btn btn-sm btn-danger" onclick="setTier('${u.username}','normal',0)">降级</button>
+    </td>
+  </tr>`).join('');
+}
+
+async function setTier(username, tier, days) {
+  const r = await fetch('/account-api/admin/set-tier', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username, tier, days}), credentials: 'same-origin'});
+  const d = await r.json();
+  showMsg(d.ok ? `${username} 已设为 ${tier}` : (d.error || '失败'), d.ok);
+  if (d.ok) { loadUsers(); loadStats(); }
+}
+
+function copyText(t) { navigator.clipboard.writeText(t); }
+
+loadStats(); loadCodes(); loadUsers();
+</script>
+</body></html>

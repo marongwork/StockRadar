@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录 | 选股雷达实验室</title>
+<meta name="theme-color" content="#eef5ee">
+<meta name="description" content="选股雷达实验室 VIP 会员中心 - 登录注册解锁更多可执行买点">
+<link rel="canonical" href="https://mazhi.icu/invest/account/login.html">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+SC:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f7f3;--surface:rgba(255,255,255,.86);--surface2:rgba(248,250,247,.94);
+  --ink:#112136;--muted:#607086;--soft:#8a97a8;--line:rgba(29,50,73,.14);
+  --green:#08785b;--green2:#0a9a72;--gold:#b88718;--gold2:#d6a21d;--blue:#375f9f;
+  --red:#c4374c;--shadow:0 20px 54px rgba(47,67,86,.14);
+  --font:'IBM Plex Sans SC','Microsoft YaHei',system-ui,sans-serif;--num:'JetBrains Mono',Menlo,monospace;
+}
+*{box-sizing:border-box} html{min-height:100%;overflow-x:hidden} body{min-height:100%;margin:0;color:var(--ink);font:14px/1.6 var(--font);overflow-x:hidden;background:
+  linear-gradient(180deg,#f7f9f4 0%,#edf3ed 48%,#e4ece6 100%);
+}
+body:before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:
+  linear-gradient(rgba(17,33,54,.035) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(17,33,54,.028) 1px,transparent 1px);
+  background-size:44px 44px;mask-image:linear-gradient(180deg,rgba(0,0,0,.42),transparent 74%);
+}
+a{color:inherit}.page{position:relative;z-index:1;min-height:100vh;display:grid;grid-template-columns:minmax(380px,1fr) minmax(360px,470px);gap:34px;align-items:center;max-width:1060px;margin:0 auto;padding:42px 22px}
+.hero{padding:20px 0}.eyebrow{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 11px;border:1px solid rgba(8,120,91,.18);border-radius:999px;background:rgba(255,255,255,.62);color:var(--green);font:800 12px/1 var(--font)}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 6px rgba(0,139,99,.12)}
+.hero h1{font-size:clamp(34px,4.5vw,52px);line-height:1.12;margin:22px 0 14px;letter-spacing:0;font-weight:800;max-width:9.4em}
+.hero h1 span{color:var(--green)}
+.hero p{max-width:520px;margin:0;color:#52637a;font-size:15px;line-height:1.85}
+.hero-metrics{display:grid;grid-template-columns:1fr;gap:0;max-width:520px;margin:26px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.62)}
+.metric{display:grid;grid-template-columns:130px 1fr;gap:16px;align-items:center;border-bottom:1px solid var(--line);padding:14px 16px;background:transparent;box-shadow:none}
+.metric:last-child{border-bottom:0}.metric:before{display:none}
+.metric b{display:block;font:800 16px/1.1 var(--num);color:var(--ink);white-space:nowrap}.metric span{display:block;color:var(--muted);font-size:13px}
+.discipline{display:grid;gap:8px;max-width:520px}.discipline div{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(29,50,73,.10);background:transparent}
+.discipline i{flex:0 0 6px;width:6px;height:6px;margin-top:8px;border-radius:50%;background:var(--green);box-shadow:none}.discipline b{display:block;font-size:13px}.discipline span{display:block;color:var(--muted);font-size:12px;margin-top:1px}
+.shell{position:relative}.shell:before{display:none}
+.card{position:relative;border:1px solid rgba(29,50,73,.14);border-radius:14px;background:rgba(255,255,255,.88);box-shadow:var(--shadow);backdrop-filter:blur(18px) saturate(135%);overflow:hidden}
+.card:before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--green)}
+.card-inner{padding:30px}.brand{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}
+.brand-left{display:flex;align-items:center;gap:11px}.logo{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#102032;color:#f8f3d8;font:900 18px/1 var(--num);box-shadow:0 14px 28px rgba(16,32,50,.22)}
+.brand b{display:block;font-size:15px}.brand span{display:block;color:var(--muted);font-size:12px}.status-pill{height:28px;padding:0 10px;display:inline-flex;align-items:center;border-radius:999px;background:rgba(8,120,91,.09);color:var(--green);font:700 12px/1 var(--font)}
+.view-title{margin:0 0 6px;font-size:25px;line-height:1.2;font-weight:800}.view-sub{margin:0 0 22px;color:var(--muted);font-size:13px}
+.perks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:0 0 22px}.perk{border:1px solid rgba(29,50,73,.12);border-radius:11px;background:rgba(255,255,255,.58);padding:11px}.perk b{display:block;font-size:13px}.perk span{display:block;color:var(--muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.divider{display:flex;align-items:center;gap:10px;margin:4px 0 18px;color:var(--soft);font:700 12px/1 var(--font)}.divider:before,.divider:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+.msg{display:none;margin-bottom:14px;padding:11px 13px;border-radius:10px;font-size:13px}.msg.show{display:block;animation:msgIn .22s ease both}.msg.err{color:#a51f37;background:rgba(217,45,75,.09);border:1px solid rgba(217,45,75,.22)}.msg.ok{color:#006b4d;background:rgba(0,139,99,.10);border:1px solid rgba(0,139,99,.20)}
+@keyframes msgIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.field{margin-bottom:15px}.field label{display:block;margin-bottom:7px;color:#4c5c72;font-size:12px;font-weight:700}.field-wrap{position:relative}.field svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#7f8da1;pointer-events:none}.field input{width:100%;height:48px;padding:0 48px 0 44px;border:1px solid rgba(29,50,73,.16);border-radius:12px;background:rgba(255,255,255,.78);color:var(--ink);font:500 14px/1 var(--font);transition:border-color .16s ease,box-shadow .16s ease,background .16s ease}.field input::placeholder{color:#96a1b0}.field input:focus{outline:none;border-color:rgba(0,139,99,.55);background:#fff;box-shadow:0 0 0 4px rgba(0,139,99,.12)}.field:focus-within svg{color:var(--green)}
+.pwd-toggle{position:absolute;right:11px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);font-weight:700;cursor:pointer;padding:5px}.pwd-toggle:hover{color:var(--green)}
+.agree{display:flex;align-items:flex-start;gap:9px;margin:14px 0 18px;color:var(--muted);font-size:12px;line-height:1.55}.agree input{margin-top:2px;width:15px;height:15px;accent-color:var(--green)}.agree a{color:var(--green);text-decoration:none}
+.btn{width:100%;height:48px;border:0;border-radius:10px;cursor:pointer;font:800 14px/1 var(--font);transition:transform .16s ease,box-shadow .16s ease,background .16s ease}.btn:active{transform:translateY(1px)}.btn-primary{position:relative;overflow:hidden;color:#f7fff9;background:var(--green);box-shadow:0 12px 26px rgba(8,120,91,.20)}.btn-primary:before{display:none}.btn-primary:hover{transform:translateY(-1px);box-shadow:0 16px 32px rgba(8,120,91,.24);background:#096f55}.btn-text{position:relative;z-index:1}.btn-primary.loading{pointer-events:none;opacity:.9}.btn-primary.loading .btn-text{opacity:0}.btn-primary.loading:after{content:"";position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:3px solid rgba(255,255,255,.35);border-top-color:white;animation:spin .7s linear infinite}
+@keyframes shine{0%,45%{left:-42%}65%,100%{left:120%}}@keyframes spin{to{transform:rotate(360deg)}}
+.btn-ghost{background:rgba(255,255,255,.66);border:1px solid var(--line);color:var(--muted)}.btn-ghost:hover{background:#fff;color:var(--ink)}.btn-gold{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#3a2a05;box-shadow:0 14px 28px rgba(201,149,18,.22)}
+.switch-link,.footer-link{text-align:center;color:var(--muted);font-size:13px}.switch-link{margin-top:17px}.switch-link a,.footer-link a{color:var(--green);font-weight:800;text-decoration:none}.footer-link{margin-top:14px}
+.hidden{display:none!important}.user-card{border:1px solid rgba(29,50,73,.12);border-radius:14px;padding:20px;background:linear-gradient(135deg,rgba(16,32,50,.06),rgba(0,139,99,.08));margin-bottom:16px}.avatar{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;margin:0 auto 12px;background:#102032;color:#f8f3d8;font:900 22px/1 var(--num)}.user-info{text-align:center}.user-info .name{font-weight:800;font-size:16px;word-break:break-all}.user-info .sub{color:var(--muted);font-size:12px}.tier-banner{margin-top:14px;padding:12px;border-radius:12px;text-align:center;font-weight:800}.tier-banner.normal{background:rgba(96,112,134,.10);color:var(--muted)}.tier-banner.vip{background:rgba(201,149,18,.14);color:#8b6508}.tier-banner.svip{background:linear-gradient(135deg,rgba(240,185,11,.28),rgba(0,139,99,.12));color:#5d4204}.tier-banner .big{display:block;font-size:19px}.tier-banner .small{display:block;margin-top:2px;font-size:11px;opacity:.78}
+.redeem-box{border:1px solid rgba(29,50,73,.12);border-radius:14px;background:rgba(255,255,255,.58);padding:16px;margin-bottom:14px}.redeem-box h3{margin:0 0 4px;font-size:14px}.redeem-box p{margin:0 0 12px;color:var(--muted);font-size:12px}.redeem-row{display:flex;gap:8px}.redeem-row input{flex:1;min-width:0;height:44px;padding:0 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)}.redeem-row input:focus{outline:none;border-color:var(--green)}.redeem-row .btn{width:auto;height:44px;padding:0 18px}
+@media(max-width:900px){.page{grid-template-columns:1fr;gap:18px;padding:24px 14px}.hero{padding-top:8px}.hero h1{font-size:34px;max-width:none}.hero p{font-size:14px}.hero-metrics{margin:18px 0}.discipline{display:none}.card-inner{padding:24px}.shell{max-width:520px;width:100%;margin:0 auto}}@media(max-width:520px){.metric{grid-template-columns:1fr;gap:4px}.perks{grid-template-columns:1fr}.brand{align-items:flex-start}.status-pill{display:none}.redeem-row{flex-direction:column}.redeem-row .btn{width:100%}}
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="hero" aria-label="会员权益">
+    <div class="eyebrow"><i></i>账户权限</div>
+    <h1>选股雷达会员中心</h1>
+    <p>登录后按会员等级展示可执行买点。公开复盘、策略回测和大盘资金数据仍可游客查看，会员权限只影响候选数量和完整分析入口。</p>
+    <div class="hero-metrics">
+      <div class="metric"><b>普通</b><span>展示 1 只可执行买点</span></div>
+      <div class="metric"><b>VIP</b><span>展示 3 只可执行买点</span></div>
+      <div class="metric"><b>SVIP</b><span>展示 6 只可执行买点</span></div>
+    </div>
+    <div class="discipline">
+      <div><i></i><p><b>没有买点，只进观察池</b><span>涨停和高风险信号不会强行转成买入建议。</span></p></div>
+      <div><i></i><p><b>先看回撤，再看胜率</b><span>会员解锁的是候选数量，不改变风控纪律。</span></p></div>
+      <div><i></i><p><b>单票试仓，复盘迭代</b><span>每个信号保留时间戳，后续用于周度回测。</span></p></div>
+    </div>
+  </section>
+
+  <section class="shell" aria-label="登录注册">
+    <div class="card"><div class="card-inner">
+      <div id="viewLogin">
+        <div class="brand">
+          <div class="brand-left"><div class="logo">M</div><div><b>选股雷达实验室</b><span>会员中心</span></div></div>
+          <div class="status-pill">登录</div>
+        </div>
+        <h2 class="view-title">登录账户</h2>
+        <p class="view-sub">用于同步会员等级、兑换码和完整分析权限。</p>
+        <div class="perks">
+          <div class="perk"><b>可执行买点</b><span>普通1 · VIP3 · SVIP6</span></div>
+          <div class="perk"><b>AI 研报</b><span>公告 / 资金 / 新闻</span></div>
+          <div class="perk"><b>资金雷达</b><span>主力 / 龙虎榜 / 情绪</span></div>
+          <div class="perk"><b>策略回测</b><span>胜率 / EV / 回撤</span></div>
+        </div>
+        <div class="divider">账户登录</div>
+        <div class="msg" id="msgLogin"></div>
+        <form onsubmit="event.preventDefault(); doLogin();">
+          <div class="field"><label>手机号 / 邮箱</label><div class="field-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+            <input id="loginId" type="text" placeholder="11位手机号 或 邮箱地址" autocomplete="username">
+          </div></div>
+          <div class="field"><label>密码</label><div class="field-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <input id="loginPwd" type="password" placeholder="请输入密码" autocomplete="current-password">
+            <button type="button" class="pwd-toggle" onclick="togglePwd('loginPwd',this)">显示</button>
+          </div></div>
+          <button class="btn btn-primary" id="loginBtn" type="submit"><span class="btn-text">登录</span></button>
+        </form>
+        <div class="switch-link">还没有账号？<a href="#" onclick="showView('viewRegister');return false;">立即注册</a></div>
+        <div class="footer-link"><a href="/invest/stock-lab.html">游客访问选股雷达</a></div>
+      </div>
+
+      <div id="viewRegister" class="hidden">
+        <div class="brand">
+          <div class="brand-left"><div class="logo">M</div><div><b>选股雷达实验室</b><span>创建账户</span></div></div>
+          <div class="status-pill">注册</div>
+        </div>
+        <h2 class="view-title">创建会员账户</h2>
+        <p class="view-sub">注册后可使用兑换码升级 VIP / SVIP。</p>
+        <div class="perks">
+          <div class="perk"><b>更多买点</b><span>最多解锁 6 只候选</span></div>
+          <div class="perk"><b>完整分析</b><span>公告 / 板块 / 新闻</span></div>
+          <div class="perk"><b>风险排雷</b><span>解禁 / 减持 / 监管</span></div>
+          <div class="perk"><b>复盘数据</b><span>历史信号留存</span></div>
+        </div>
+        <div class="msg" id="msgRegister"></div>
+        <form onsubmit="event.preventDefault(); doRegister();">
+          <div class="field"><label>手机号 / 邮箱</label><div class="field-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+            <input id="regId" type="text" placeholder="11位手机号 或 邮箱地址" autocomplete="username">
+          </div></div>
+          <div class="field"><label>设置密码</label><div class="field-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <input id="regPwd" type="password" placeholder="至少6位" autocomplete="new-password">
+            <button type="button" class="pwd-toggle" onclick="togglePwd('regPwd',this)">显示</button>
+          </div></div>
+          <div class="field"><label>确认密码</label><div class="field-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+            <input id="regPwd2" type="password" placeholder="再次输入密码" autocomplete="new-password">
+          </div></div>
+          <label class="agree"><input type="checkbox" id="agreeBox"><span>我已阅读并同意 <a href="#" onclick="return false;">用户协议</a> 与 <a href="#" onclick="return false;">隐私政策</a></span></label>
+          <button class="btn btn-primary" id="regBtn" type="submit"><span class="btn-text">创建账户</span></button>
+        </form>
+        <div class="switch-link">已有账号？<a href="#" onclick="showView('viewLogin');return false;">返回登录</a></div>
+        <div class="footer-link"><a href="/invest/stock-lab.html">游客访问选股雷达</a></div>
+      </div>
+
+      <div id="viewLoggedIn" class="hidden">
+        <div class="brand">
+          <div class="brand-left"><div class="logo">M</div><div><b>选股雷达实验室</b><span>我的账户</span></div></div>
+          <div class="status-pill">已登录</div>
+        </div>
+        <div class="user-card">
+          <div class="avatar" id="avatarLetter">W</div>
+          <div class="user-info"><div class="name" id="liUsername">-</div><div class="sub" id="liSub">账户</div></div>
+          <div class="tier-banner" id="tierBanner"><span class="big" id="liTierName">普通</span><span class="small" id="liExpires"></span></div>
+        </div>
+        <div class="redeem-box">
+          <h3>兑换码升级</h3>
+          <p>输入兑换码升级 VIP / 超级 VIP，解锁更多可执行买点。</p>
+          <div class="msg" id="msgRedeem"></div>
+          <div class="redeem-row"><input id="redeemInput" placeholder="如 VIP-AB12CD"><button class="btn btn-gold" onclick="doRedeem()">兑换</button></div>
+        </div>
+        <a href="/invest/stock-lab.html" class="btn btn-primary" style="text-decoration:none;display:grid;place-items:center;margin-bottom:10px"><span class="btn-text">进入选股雷达实验室</span></a>
+        <button class="btn btn-ghost" onclick="doLogout()">退出登录</button>
+      </div>
+    </div></div>
+  </section>
+</main>
+<script>
+const TIER_NAMES = {normal:'普通', vip:'VIP', svip:'超级VIP'};
+function showView(v){
+  ['viewLogin','viewRegister','viewLoggedIn'].forEach(id => document.getElementById(id).classList.add('hidden'));
+  document.getElementById(v).classList.remove('hidden');
+  ['msgLogin','msgRegister','msgRedeem'].forEach(id => { const el = document.getElementById(id); if(el) el.classList.remove('show'); });
+}
+function showMsg(elId, text, ok) {
+  const el = document.getElementById(elId);
+  if(!el) return;
+  el.textContent = (ok ? 'OK ' : '提示 ') + text;
+  el.className = 'msg show ' + (ok ? 'ok' : 'err');
+}
+function togglePwd(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '隐藏'; }
+  else { inp.type = 'password'; btn.textContent = '显示'; }
+}
+function setLoading(btnId, loading, labelText) {
+  const btn = document.getElementById(btnId);
+  if(!btn) return;
+  if(loading){ btn.classList.add('loading'); btn.disabled = true; }
+  else { btn.classList.remove('loading'); btn.disabled = false; if(labelText) btn.querySelector('.btn-text').textContent = labelText; }
+}
+async function doLogin() {
+  const username = document.getElementById('loginId').value.trim();
+  const password = document.getElementById('loginPwd').value;
+  if (!username || !password) { showMsg('msgLogin', '请填写手机号/邮箱和密码', false); return; }
+  setLoading('loginBtn', true);
+  try {
+    const r = await fetch('/account-api/login', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({username, password}), credentials: 'same-origin'
+    });
+    const data = await r.json();
+    setLoading('loginBtn', false, '登录');
+    if (!r.ok) { showMsg('msgLogin', data.error || '登录失败', false); return; }
+    checkLogin();
+  } catch (e) { setLoading('loginBtn', false, '登录'); showMsg('msgLogin', '网络错误，请重试', false); }
+}
+async function doRegister() {
+  const username = document.getElementById('regId').value.trim();
+  const password = document.getElementById('regPwd').value;
+  const password2 = document.getElementById('regPwd2').value;
+  const agreed = document.getElementById('agreeBox').checked;
+  if (!username || !password) { showMsg('msgRegister', '请填写手机号/邮箱和密码', false); return; }
+  if (password !== password2) { showMsg('msgRegister', '两次输入的密码不一致', false); return; }
+  if (!agreed) { showMsg('msgRegister', '请先同意用户协议与隐私政策', false); return; }
+  setLoading('regBtn', true);
+  try {
+    const r = await fetch('/account-api/register', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({username, password}), credentials: 'same-origin'
+    });
+    const data = await r.json();
+    setLoading('regBtn', false, '创建账户');
+    if (!r.ok) { showMsg('msgRegister', data.error || '注册失败', false); return; }
+    showMsg('msgRegister', '注册成功，正在自动登录...', true);
+    setTimeout(() => doLoginAfterRegister(username, password), 800);
+  } catch (e) { setLoading('regBtn', false, '创建账户'); showMsg('msgRegister', '网络错误，请重试', false); }
+}
+async function doLoginAfterRegister(username, password) {
+  const r = await fetch('/account-api/login', {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({username, password}), credentials: 'same-origin'
+  });
+  if (r.ok) checkLogin();
+  else { showView('viewLogin'); showMsg('msgLogin', '注册成功，请手动登录', true); }
+}
+async function doLogout() {
+  await fetch('/account-api/logout', {method: 'POST', credentials: 'same-origin'});
+  showView('viewLogin');
+}
+async function doRedeem() {
+  const code = document.getElementById('redeemInput').value.trim();
+  if (!code) return;
+  try {
+    const r = await fetch('/account-api/redeem', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({code}), credentials: 'same-origin'
+    });
+    const data = await r.json();
+    if (r.ok) { document.getElementById('redeemInput').value = ''; checkLogin(); }
+    else { showMsg('msgRedeem', data.error || '兑换失败', false); }
+  } catch(e) { showMsg('msgRedeem', '网络错误', false); }
+}
+function maskId(id) {
+  if (/^1\d{10}$/.test(id)) return id.slice(0,3) + '****' + id.slice(-4);
+  const at = id.indexOf('@');
+  if (at > 1) return id[0] + '***' + id.slice(at);
+  return id;
+}
+async function checkLogin() {
+  try {
+    const r = await fetch('/account-api/me', {credentials: 'same-origin'});
+    const data = await r.json();
+    if (data.logged_in) {
+      showView('viewLoggedIn');
+      const masked = maskId(data.username);
+      document.getElementById('liUsername').textContent = masked;
+      document.getElementById('avatarLetter').textContent = data.username[0].toUpperCase();
+      document.getElementById('liSub').textContent = data.username.includes('@') ? '邮箱账户' : '手机账户';
+      const banner = document.getElementById('tierBanner');
+      banner.className = 'tier-banner ' + data.tier;
+      document.getElementById('liTierName').textContent = TIER_NAMES[data.tier] || data.tier;
+      document.getElementById('liExpires').textContent = data.tier_expires
+        ? '有效期至 ' + data.tier_expires.slice(0,10)
+        : (data.tier === 'normal' ? '当前为免费用户' : '永久有效');
+    } else {
+      showView('viewLogin');
+    }
+  } catch(e) {
+    showView('viewLogin');
+  }
+}
+checkLogin();
+</script>
+</body>
+</html>

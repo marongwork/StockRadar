@@ -1,12 +1,20 @@
-# 选股雷达实验室 · Stock Radar Lab
+# 📡 StockRadar · 选股雷达实验室
 
-A-share stock signal scanner + backtest dashboard + VIP membership system. Pure Python → static HTML pipeline, served by Nginx.
+![Python](https://img.shields.io/badge/Python-3.12+-3776AB?logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-3.x-000000?logo=flask&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-22B14C)
+![A-Share](https://img.shields.io/badge/A股-信号扫描-D62828)
+![VIP](https://img.shields.io/badge/VIP-账户系统-F0B60B)
 
-> ⚠️ 仅供学习研究，不构成投资建议。回测结果不代表未来收益。
+> **A股信号扫描 + 多 Agent 评审 + 策略回测 + VIP 会员系统**。纯 Python → 静态 HTML 管线，Nginx 直接服务。
+
+> ⚠️ **仅供学习研究，不构成投资建议。回测结果不代表未来收益。**
+
+🔗 [在线演示](https://mazhi.icu/invest/stock-lab.html) · [策略说明](docs/STRATEGY.md) · [系统架构](docs/ARCHITECTURE.md) · [技术手册](TECH_DOCS.md)
 
 ---
 
-## 功能
+## ✨ 功能
 
 - **选股引擎** (`stock_picker.py`)：动态主题扫描 + 全市场资金动量 + 涨停短线，ThreadPoolExecutor 并行 API 调用
 - **信号页面** (`generate_stock_lab.py`)：静态页面生成器，增量生成个股详情页

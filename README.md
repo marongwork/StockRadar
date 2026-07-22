@@ -14,6 +14,36 @@
 
 ---
 
+## 🖼️ 效果预览
+
+<div align="center">
+  <img src="docs/images/market-radar.webp" alt="大盘资金雷达" width="100%">
+  <br><sub>📊 大盘资金雷达 — 指数实时涨跌 / 板块主力资金流入 / 涨停梯队 / 情绪周期</sub>
+</div>
+
+<br>
+
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <img src="docs/images/agent-council.webp" alt="AI多智能体信号评审" width="100%">
+      <br><sub>🤖 信号复盘 — 多 Agent 独立投票，资金/技术/事件/风险闸门通过才进候选</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="docs/images/backtest-workbench.webp" alt="策略回测工作台" width="100%">
+      <br><sub>📈 策略回测 — 胜率/期望值/夏普比率/最大回撤/连亏笔数</sub>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+      <img src="docs/images/limit-up-pyramid.webp" alt="涨停梯队金字塔" width="80%">
+      <br><sub>🔺 涨停梯队金字塔 — 连板高度 / 封单 / 炸板率 / 题材共振</sub>
+    </td>
+  </tr>
+</table>
+
+---
+
 ## ✨ 功能
 
 - **选股引擎** (`stock_picker.py`)：动态主题扫描 + 全市场资金动量 + 涨停短线，ThreadPoolExecutor 并行 API 调用
